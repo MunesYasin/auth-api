@@ -26,19 +26,15 @@ app.get('/test',(req,res)=>{
   res.status(200).send('hello ');
 })
 
-const start = (port) => {
-  app.listen(port, () => {
-    console.log(`The server start running at port ${port}`);
-  });
-};
 app.use(notFound);
 app.use(errorHandler);
 
 module.exports = {
   server: app,
   start: (port) => {
-    app.listen(port, () => {
-      console.log(`Server Up on ${port}`);
-    });
+    if (!port) {
+      throw new Error("Missing Port");
+    }
+    app.listen(port, () => console.log(`Listening on ${port}`));
   },
 };
